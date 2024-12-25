@@ -163,27 +163,24 @@ def calculate_calories(request):
     recommendation_model =  Recomendationmodel(file_path="Sources/epi_r.csv")
 
     # Read the recipe data
-    try:
-        recommendation_model.read_csv()
-    except Exception as e:
-        print(f"Error reading CSV file: {e}")
-        recommendation_model = None
+
+    recommendation_model.read_csv()
+    print("data readed")
+
 
     # Filter the data (if applicable)
-    if recommendation_model:
-        try:
-            recommendation_model.filter_data()
-        except Exception as e:
-            print(f"Error filtering data: {e}")
+
+    recommendation_model.filter_data()
+    print("data filtered")
 
     # Generate recipe recommendations
 
     recommendation_model.recipe_recommend(
                 number_of_dishes=3,
-                number_of_candidates=3,
+                number_of_candidates=5,
                 nut_conf=meal_plan)
 
-
+    print(recommendation_model.results)
 
     recommendation_model.get_text()
 

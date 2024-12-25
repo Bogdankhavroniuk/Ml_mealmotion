@@ -143,6 +143,7 @@ class Recomendationmodel():
         self.file_path = "Site\Sourcess\epi_r.csv"
         self.data = None
         self.text  = None
+        self.results =None
     def read_csv(self):
         """
         Зчитує CSV-файл та зберігає його вміст у self.data.
