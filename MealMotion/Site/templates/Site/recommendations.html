@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MealMotion - Recommendations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+
+        .content-wrapper {
+            text-align: center;
+            margin-top: 80px; /* Add margin-top for spacing */
+        }
+
+        .calories-burned {
+            margin-bottom: 20px;
+        }
+
+        .recommendation-section {
+            margin-bottom: 20px;
+        }
+
+        .return-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>MealMotion</h1>
+    </header>
+
+    <div class="container">
+        <div class="content-wrapper">
+            <h2>Calories Burned:</h2>
+            <p>{{ calories_burned }} kcal</p>
+            <div class="recommendation-section">
+                <h2>Your nutrients balance:</h2>
+                <p>{{ nutrients}}</p>
+            </div>
+            <div class="recommendation-section">
+                <h2>Your Recommendations:</h2>
+                <p>{{ recommendation }}</p>
+            </div>
+
+            <a href="{% url 'index' %}" class="return-button">Return to Main Page</a>
+        </div>
+    </div>
+
+</body>
+</html>

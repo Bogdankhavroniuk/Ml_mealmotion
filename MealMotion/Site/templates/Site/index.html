@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MealMotion - Calorie Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 200;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+            margin-top: 200px;
+            margin-bottom: 200px;
+        }
+         .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+            color:  #f4f4f4;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        input[type="number"], select {
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        button[type="submit"] {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            margin-bottom: 5px;
+        }
+        .form-group select, .form-group input[type="number"] {
+            padding: 8px;
+            margin-bottom: 15px;
+        }
+        .form-group button {
+            width: 100%;
+        }
+        .form-group a {
+            color: #007BFF;
+            text-decoration: none;
+
+            font-size: 1em;
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .form-group a:hover {
+            text-decoration: underline;
+        }
+        /* Scrollable activity list */
+        select[name="activity"] {
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+         header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+        }
+        .btn-large {
+          padding: 15px 30px;
+          font-size: 1.2em;
+          }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+        <h2>MealMotion</h2>
+        </header>
+        <form method="POST" action="{% url 'calculate_calories' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="weight">Weight (kg):</label>
+                <input type="number" id="weight" name="weight" required placeholder="Enter your weight">
+            </div>
+
+            <div class="form-group">
+                <label for="sex">Sex:</label>
+                <select id="sex" name="sex" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required placeholder="Enter your age">
+            </div>
+
+            <div class="form-group">
+                <label for="height">Height (cm):</label>
+                <input type="number" id="height" name="height" required placeholder="Enter your height">
+            </div>
+
+            <div class="form-group">
+                <label for="activity">Activity:</label>
+                <select id="activity" name="activity" required>
+                    <optgroup label="Cycling">
+                        <option value="Cycling, mountain bike, bmx">Cycling, mountain bike, bmx</option>
+                        <option value="Cycling, <10 mph, leisure bicycling">Cycling, <10 mph, leisure bicycling</option>
+                        <option value="Cycling, >20 mph, racing">Cycling, >20 mph, racing</option>
+                        <option value="Cycling, 10-11.9 mph, light">Cycling, 10-11.9 mph, light</option>
+                        <option value="Cycling, 12-13.9 mph, moderate">Cycling, 12-13.9 mph, moderate</option>
+                    </optgroup>
+                    <optgroup label="Stationary Cycling">
+                        <option value="Stationary cycling, very light">Stationary cycling, very light</option>
+                        <option value="Stationary cycling, light">Stationary cycling, light</option>
+                        <option value="Stationary cycling, moderate">Stationary cycling, moderate</option>
+                        <option value="Stationary cycling, vigorous">Stationary cycling, vigorous</option>
+                        <option value="Stationary cycling, very vigorous">Stationary cycling, very vigorous</option>
+                    </optgroup>
+                    <optgroup label="Running">
+                        <option value="Running, 5 mph (12 minute mile)">Running, 5 mph (12 minute mile)</option>
+                        <option value="Running, 5.2 mph (11.5 minute mile)">Running, 5.2 mph (11.5 minute mile)</option>
+                        <option value="Running, 6 mph (10 min mile)">Running, 6 mph (10 min mile)</option>
+                        <option value="Running, 6.7 mph (9 min mile)">Running, 6.7 mph (9 min mile)</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="time_in_hours_activity">Duration (hours):</label>
+                <input type="number" step="0.1" id="time_in_hours_activity" name="time_in_hours_activity" min="0" required placeholder="Enter activity duration">
+            </div>
+
+            <div class="form-group">
+                <label for="time_from_last_eating">Time Since Last Meal (hours):</label>
+                <input type="number" step="0.1" id="time_from_last_eating" name="time_from_last_eating" min="0" required placeholder="Enter time since last meal">
+            </div>
+
+            <div class="form-group">
+                <label for="goal">Goal:</label>
+                <select id="goal" name="goal" required>
+                    <option value="gain_weight">Gain Weight</option>
+                    <option value="lose_weight">Lose Weight</option>
+                </select>
+            </div>
+
+            <h2>Your Recommendations:</h2>
+            {% if recommendation %}
+              <p>{{ recommendation }}</p>  {% else %}
+               <p>Error generating recommendations.</p>
+            {% endif %}
+
+
+
+        </form>
+    </div>
+</body>
+</html>
