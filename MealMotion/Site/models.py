@@ -152,6 +152,7 @@ class Recomendationmodel():
         try:
             self.data = pd.read_csv(self.file_path)
             print("Дані успішно зчитано.")
+            self.data  = self.data.iloc[0:500]
         except Exception as e:
             print(f"Помилка при зчитуванні CSV: {e}")
             self.data = None
