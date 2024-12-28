@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 import pulp as pl
 import json
-
+import os
 class Calories():
 
     def __init__(self , weight  , sex  , age , height ,  activity ,  time_in_hours_activity, time_from_last_eating , file_path = "Site/Sourcess/exercise_dataset.csv"):
@@ -140,7 +140,8 @@ class MealPlanner:
 class Recomendationmodel():
 
     def __init__(self, file_path = "Site\Sourcess\epi_r.csv"):
-        self.file_path = "Site\Sourcess\epi_r.csv"
+        file_path = os.path.join("Site", "Sourcess", "epi_r.csv")
+        self.file_path = file_path
         self.data = None
         self.text  = None
         self.results =None
